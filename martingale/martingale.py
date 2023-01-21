@@ -68,7 +68,9 @@ def test_code():
     np.random.seed(gtid())  # do this only once  		  	   		  		 			  		 			     			  	 
     print(get_spin_result(win_prob))  # test the roulette spin  		  	   		  		 			  		 			     			  	 
     # add your code here to implement the experiments
-    e1f1(win_prob)
+    experiment(win_prob, 11)
+    experiment(win_prob, 12)
+    experiment(win_prob, 13)
 
 def strategy(win_prob, realistic = False, bankroll = None):
     res = np.full(1001, 80)
@@ -100,19 +102,57 @@ def strategy(win_prob, realistic = False, bankroll = None):
                         return res
     return res
 
-def plot_helper(axis = [0, 300, -256, 100], title = '', xlabel = '# of Trials', ylabel = 'Winnings ($)'):
+def run_helper(runs, win_prob, realistic = None, bankroll = None):
+    if runs == 10:
+        for i in range(runs):
+            temp = strategy(win_prob)
+            plt.plot(temp)
+    elif runs == 1000:
+        if not realistic:
+            res = np.zeros((1000, 1001))
+            for i in range(runs):
+                temp = strategy(win_prob)
+                res[i] = temp
+            return res
+
+
+def plot_helper(axis = [0, 300, -256, 100], title = '', xlabel = '# of Trials', ylabel = 'Winnings ($)', mm = False, metric = '', m_value = None, std = None):
     plt.axis(axis)
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
 
-def e1f1(win_prob):
-    plot_helper(title = 'Figure 1 - 10 episodes, unlimited bankroll')
+    if mm:
+        plt.plot(m_value, label = metric)
+        plt.plot(m_value - std, label = '{} minus Std.'.format(metric))
+        plt.plot(m_value + std, label = '{} plus Std.'.format(metric))
+        plt.legend()
 
-    for i in range(10):
-        temp = strategy(win_prob)
-        plt.plot(temp)
+def mm_calc(res, metric):
+    std = np.std(res, axis = 0)
 
-    plt.show()
+    if metric == 'mean':
+        m_value = np.mean(res, axis=0)
+    elif metric == 'median':
+        m_value = np.median(res, axis = 0)
+
+    return m_value, std
+
+def experiment(win_prob, expfig):
+    if expfig == 11:
+        plot_helper(title = 'Fig. 1 - 10 episodes, unlimited bankroll')
+        run_helper(10, win_prob)
+        plt.show()
+    elif expfig == 12:
+        values = mm_calc(run_helper(1000, win_prob), 'mean')
+        plot_helper(title = 'Fig. 2 - mean of 1000 episodes, unlimited bankroll', mm = True, metric = 'mean',
+                    m_value = values[0], std = values[1])
+        plt.show()
+    elif expfig == 13:
+        values = mm_calc(run_helper(1000, win_prob), 'median')
+        plot_helper(title =' Fig. 3 - median of 1000 episodes, unlimited bankroll', mm = True, metric = 'median',
+                    m_value = values[0], std = values[1])
+        plt.show()
+
 if __name__ == "__main__":  		  	   		  		 			  		 			     			  	 
     test_code()  		  	   		  		 			  		 			     			  	 

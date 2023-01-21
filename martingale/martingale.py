@@ -27,7 +27,7 @@ GT ID: 903216278 (replace with your GT ID)
 """  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
 import numpy as np  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
+import matplotlib.pyplot as plt
   		  	   		  		 			  		 			     			  	 
 def author():  		  	   		  		 			  		 			     			  	 
     """  		  	   		  		 			  		 			     			  	 
@@ -64,13 +64,55 @@ def test_code():
     """  		  	   		  		 			  		 			     			  	 
     Method to test your code  		  	   		  		 			  		 			     			  	 
     """  		  	   		  		 			  		 			     			  	 
-    win_prob = 0.60  # set appropriately to the probability of a win  		  	   		  		 			  		 			     			  	 
+    win_prob = 18/38  # set appropriately to the probability of a win
     np.random.seed(gtid())  # do this only once  		  	   		  		 			  		 			     			  	 
     print(get_spin_result(win_prob))  # test the roulette spin  		  	   		  		 			  		 			     			  	 
-    # add your code here to implement the experiments  		  	   		  		 			  		 			     			  	 
-def strategy():
+    # add your code here to implement the experiments
+    e1f1(win_prob)
 
+def strategy(win_prob, realistic = False, bankroll = None):
+    res = np.full(1001, 80)
+    num_bets = 0
+    episode_winnings = 0
+
+    while episode_winnings < 80:
+        won = False
+        bet_amount = 1
+
+        while not won:
+            if num_bets >= 1001:
+                return res
+            res[num_bets] = episode_winnings
+            num_bets += 1
+            won = get_spin_result(win_prob)
+
+            if won:
+                episode_winnings += bet_amount
+            else:
+                episode_winnings -= bet_amount
+                bet_amount *= 2
+
+                if realistic:
+                    if bet_amount - bankroll > episode_winnings:
+                        bet_amount = episode_winnings + bankroll
+                    if bankroll == -episode_winnings:
+                        res[num_bets:] = episode_winnings
+                        return res
     return res
-  		  	   		  		 			  		 			     			  	 
+
+def plot_helper(axis = [0, 300, -256, 100], title = '', xlabel = '# of Trials', ylabel = 'Winnings ($)'):
+    plt.axis(axis)
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+
+def e1f1(win_prob):
+    plot_helper(title = 'Figure 1 - 10 episodes, unlimited bankroll')
+
+    for i in range(10):
+        temp = strategy(win_prob)
+        plt.plot(temp)
+
+    plt.show()
 if __name__ == "__main__":  		  	   		  		 			  		 			     			  	 
     test_code()  		  	   		  		 			  		 			     			  	 

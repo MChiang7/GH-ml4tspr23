@@ -112,7 +112,8 @@ def run_helper(runs, win_prob, realistic = False):
     if runs == 10:
         for i in range(runs):
             temp = strategy(win_prob)
-            plt.plot(temp)
+            plt.plot(temp, label = 'episode {}'.format(i + 1))
+            plt.legend()
     elif runs == 1000:
         res = np.zeros((1000, 1001))
         for i in range(runs):

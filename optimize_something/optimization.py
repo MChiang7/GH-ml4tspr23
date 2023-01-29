@@ -21,9 +21,9 @@ GT honor code violation.
   		  	   		  		 			  		 			     			  	 
 -----do not edit anything above this line---  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
-Student Name: Tucker Balch (replace with your name)  		  	   		  		 			  		 			     			  	 
-GT User ID: tb34 (replace with your User ID)  		  	   		  		 			  		 			     			  	 
-GT ID: 900897987 (replace with your GT ID)  		  	   		  		 			  		 			     			  	 
+Student Name: Michael Chiang (replace with your name)  		  	   		  		 			  		 			     			  	 
+GT User ID: mchiang30 (replace with your User ID)  		  	   		  		 			  		 			     			  	 
+GT ID: 903216278 (replace with your GT ID)  		  	   		  		 			  		 			     			  	 
 """  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
@@ -33,12 +33,29 @@ import numpy as np
   		  	   		  		 			  		 			     			  	 
 import matplotlib.pyplot as plt  		  	   		  		 			  		 			     			  	 
 import pandas as pd  		  	   		  		 			  		 			     			  	 
-from util import get_data, plot_data  		  	   		  		 			  		 			     			  	 
+from util import get_data, plot_data
+from scipy.optimize import minimize
   		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
 # This is the function that will be tested by the autograder  		  	   		  		 			  		 			     			  	 
 # The student must update this code to properly implement the functionality  		  	   		  		 			  		 			     			  	 
-def optimize_portfolio(  		  	   		  		 			  		 			     			  	 
+def portfolio_calculations(prices, allocs, start_val):
+    normed = prices / prices.iloc[0]
+    alloced = normed * allocs
+    pos_vals = alloced * start_val
+    port_val = pos_vals.sum(axis = 1)
+    return port_val
+
+def portfolio_statistics(port_val, sf, rfr):
+    cum_ret = (port_val.iloc[-1] / port_val.iloc[0]) - 1
+    daily_returns = port_val / port_val.shift(1) - 1
+    daily_returns = daily_returns.iloc[1:]
+    avg_daily_ret = daily_returns.means()
+    std_daily_ret = daily_returns.std()
+    sr = (sf ** 0.5) * ((avg_daily_ret - rfr) / std_daily_ret)
+    return cum_ret, avg_daily_ret, std_daily_ret, sr
+
+def optimize_portfolio(
     sd=dt.datetime(2008, 1, 1),  		  	   		  		 			  		 			     			  	 
     ed=dt.datetime(2009, 1, 1),  		  	   		  		 			  		 			     			  	 
     syms=["GOOG", "AAPL", "GLD", "XOM"],  		  	   		  		 			  		 			     			  	 
@@ -73,7 +90,7 @@ def optimize_portfolio(
     prices_SPY = prices_all["SPY"]  # only SPY, for comparison later  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
     # find the allocations for the optimal portfolio  		  	   		  		 			  		 			     			  	 
-    # note that the values here ARE NOT meant to be correct for a test case  		  	   		  		 			  		 			     			  	 
+    # note that the values here ARE NOT meant to be correct for a test case
     allocs = np.asarray(  		  	   		  		 			  		 			     			  	 
         [0.2, 0.2, 0.3, 0.3]  		  	   		  		 			  		 			     			  	 
     )  # add code here to find the allocations  		  	   		  		 			  		 			     			  	 

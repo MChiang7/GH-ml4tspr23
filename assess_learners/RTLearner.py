@@ -1,28 +1,15 @@
 import numpy as np
-import math
+import random
 
-class DTLearner(object):
+class RTLearner(object):
+
     def __init__(self, leaf_size=1, verbose=False):
         self.leaf_size = leaf_size
         self.verbose = verbose
+        random.seed(903216278)
 
     def author(self):
-        return 'mchiang30'
-
-    def get_best_feature(self, data_x, data_y):
-        index = -1
-        best_corr = -1
-
-        for i in range(data_x.shape[1]):
-            if 0 >= np.std(data_x[:, i]):
-                temp_corr = 0
-            else:
-                temp_corr = np.corrcoef(data_x[:, i], data_y)[0, 1]
-            if best_corr < temp_corr:
-                index = i
-                best_corr = temp_corr
-
-        return index
+        return 'mchian30'
 
     def build_tree(self, data_x, data_y):
         if self.leaf_size >= data_x.shape[0]:
@@ -31,9 +18,10 @@ class DTLearner(object):
         if len(set(data_y)) == 1:
             return np.array([np.nan, data_y[0], np.nan, np.nan])
 
-        index = self.get_best_feature(data_x, data_y)
+        index = random.randrange(data_x.shape[1])
+        temp1, temp2 = random.sample(range(data_x.shape[0]), 2)
 
-        masks = [np.median(data_x[:, index]) < data_x[:, index], np.median(data_x[:, index]) >= data_x[:, index]]
+        masks = [(data_x[temp1][index] + data_x[temp2][index]) / 2 < data_x[:, index], (data_x[temp1][index] + data_x[temp2][index]) / 2 >= data_x[:, index]]
 
         for i in range(len(masks)):
             if i == 0:
@@ -50,12 +38,11 @@ class DTLearner(object):
         left_tree = self.build_tree(data_x_left, data_y_left)
 
         if 1 != left_tree.ndim:
-            root = np.asarray([index, np.median(data_x[:, index]), 1, left_tree.shape[0] + 1])
+            root = np.asarray([index, (data_x[temp1][index] + data_x[temp2][index]) / 2, 1, left_tree.shape[0] + 1])
         else:
-            root = np.asarray([index, np.median(data_x[:, index]), 1, 2])
+            root = np.asarray([index, (data_x[temp1][index] + data_x[temp2][index]) / 2, 1, 2])
 
         return np.vstack((root, left_tree, right_tree))
-
 
     def add_evidence(self, data_x, data_y):
         self.tree = self.build_tree(data_x, data_y)
@@ -72,5 +59,5 @@ class DTLearner(object):
             res.append(self.tree[cursor][1])
         return res
 
-if __name__=='__main__':
+if __name__ == '__main__':
     print("the secret clue is 'zzyzx'")

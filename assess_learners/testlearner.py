@@ -71,9 +71,9 @@ def experiment(train_x, train_y, test_x, test_y, expfig):
             pred_y_out = learner.query(test_x)
             rmse_out = math.sqrt(((test_y - pred_y_out) ** 2).sum() / test_y.shape[0])
             res_out.append(rmse_out)
-        plot_helper(1, runs, res_in, res_out, 'In Sample RMSE', 'Out Sample RMSE', 'Overfitting and Leaf Size - DTLearner on Istanbul Data Set', 'Leaf Size',
+        plot_helper(1, runs, res_in, res_out, 'In Sample RMSE', 'Out Sample RMSE', 'Overfitting and Leaf Size - DTLearner', 'Leaf Size',
                     'Root Mean Squared Error')
-    elif expfig == 12:
+    elif expfig == 21:
         for i in range(1, runs + 1):
             learner = bl.BagLearner(learner=dtl.DTLearner, kwargs={'leaf_size':i}, bags=20, boost=False, verbose=False)
             learner.add_evidence(train_x, train_y)
@@ -83,7 +83,7 @@ def experiment(train_x, train_y, test_x, test_y, expfig):
             pred_y_out = learner.query(test_x)
             rmse_out = math.sqrt(((test_y - pred_y_out) ** 2).sum() / test_y.shape[0])
             res_out.append(rmse_out)
-        plot_helper(2, runs, res_in, res_out, 'In Sample RMSE', 'Out Sample RMSE', 'Overfitting and Leaf Size - BagLearner with DTLearner on Istanbul Data Set with 20 Bags', 'Leaf Size',
+        plot_helper(2, runs, res_in, res_out, 'In Sample RMSE', 'Out Sample RMSE', 'Overfitting and Leaf Size - BagLearner with DTLearner, 20 Bags', 'Leaf Size',
                     'Root Mean Squared Error')
     elif expfig == 31:
         for i in range(1, runs + 1):

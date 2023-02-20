@@ -28,7 +28,12 @@ import numpy as np
   		  	   		  		 			  		 			     			  	 
 import DTLearner as dt  		  	   		  		 			  		 			     			  	 
 import LinRegLearner as lrl  		  	   		  		 			  		 			     			  	 
-from gen_data import best_4_dt, best_4_lin_reg  		  	   		  		 			  		 			     			  	 
+from gen_data import best_4_dt, best_4_lin_reg
+
+passes_lr = 0
+passes_dt = 0
+fails_lr = 0
+fails_dt = 0
   		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
 # compare two learners' rmse out of sample  		  	   		  		 			  		 			     			  	 
@@ -74,28 +79,35 @@ def compare_os_rmse(learner1, learner2, x, y):
     return rmse1, rmse2  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
-def test_code():  		  	   		  		 			  		 			     			  	 
+def test_code(seed):
     """  		  	   		  		 			  		 			     			  	 
     Performs a test of your code and prints the results  		  	   		  		 			  		 			     			  	 
-    """  		  	   		  		 			  		 			     			  	 
-    # create two learners and get data  		  	   		  		 			  		 			     			  	 
+    """
+    global passes_lr
+    global passes_dt
+    global fails_lr
+    global fails_dt
+
+    # create two learners and get data
     lrlearner = lrl.LinRegLearner(verbose=False)  		  	   		  		 			  		 			     			  	 
     dtlearner = dt.DTLearner(verbose=False, leaf_size=1)  		  	   		  		 			  		 			     			  	 
-    x, y = best_4_lin_reg()  		  	   		  		 			  		 			     			  	 
+    x, y = best_4_lin_reg(seed)
   		  	   		  		 			  		 			     			  	 
     # compare the two learners  		  	   		  		 			  		 			     			  	 
     rmse_lr, rmse_dt = compare_os_rmse(lrlearner, dtlearner, x, y)  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
     # share results  		  	   		  		 			  		 			     			  	 
-    print()  		  	   		  		 			  		 			     			  	 
-    print("best_4_lin_reg() results")  		  	   		  		 			  		 			     			  	 
-    print(f"RMSE LR    : {rmse_lr}")  		  	   		  		 			  		 			     			  	 
-    print(f"RMSE DT    : {rmse_dt}")  		  	   		  		 			  		 			     			  	 
+    #print()
+    #print("best_4_lin_reg() results")
+    #print(f"RMSE LR    : {rmse_lr}")
+    #print(f"RMSE DT    : {rmse_dt}")
     if rmse_lr < 0.9 * rmse_dt:  		  	   		  		 			  		 			     			  	 
-        print("LR < 0.9 DT:  pass")  		  	   		  		 			  		 			     			  	 
+        #print("LR < 0.9 DT:  pass")
+        passes_lr += 1
     else:  		  	   		  		 			  		 			     			  	 
-        print("LR >= 0.9 DT:  fail")  		  	   		  		 			  		 			     			  	 
-    print  		  	   		  		 			  		 			     			  	 
+        #print("LR >= 0.9 DT:  fail")
+        fails_lr += 1
+    #print
   		  	   		  		 			  		 			     			  	 
     # get data that is best for a random tree  		  	   		  		 			  		 			     			  	 
     lrlearner = lrl.LinRegLearner(verbose=False)  		  	   		  		 			  		 			     			  	 
@@ -106,16 +118,25 @@ def test_code():
     rmse_lr, rmse_dt = compare_os_rmse(lrlearner, dtlearner, x, y)  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
     # share results  		  	   		  		 			  		 			     			  	 
-    print()  		  	   		  		 			  		 			     			  	 
-    print("best_4_dt() results")  		  	   		  		 			  		 			     			  	 
-    print(f"RMSE LR    : {rmse_lr}")  		  	   		  		 			  		 			     			  	 
-    print(f"RMSE DT    : {rmse_dt}")  		  	   		  		 			  		 			     			  	 
+    #print()
+    #print("best_4_dt() results")
+    #print(f"RMSE LR    : {rmse_lr}")
+    #print(f"RMSE DT    : {rmse_dt}")
     if rmse_dt < 0.9 * rmse_lr:  		  	   		  		 			  		 			     			  	 
-        print("DT < 0.9 LR:  pass")  		  	   		  		 			  		 			     			  	 
+        #print("DT < 0.9 LR:  pass")
+        passes_dt += 1
     else:  		  	   		  		 			  		 			     			  	 
-        print("DT >= 0.9 LR:  fail")  		  	   		  		 			  		 			     			  	 
-    print  		  	   		  		 			  		 			     			  	 
+        #print("DT >= 0.9 LR:  fail")
+        fails_dt += 1
+    #print
   		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
-if __name__ == "__main__":  		  	   		  		 			  		 			     			  	 
-    test_code()  		  	   		  		 			  		 			     			  	 
+if __name__ == "__main__":
+    trials = 1000
+
+    for i in range(trials):
+        temp_seed = np.random.randint(1000000, 9000000)
+        test_code(temp_seed)
+
+    print('LR - Success: {}% | Fail: {}%'.format(passes_lr / trials * 100, fails_lr / trials * 100))
+    print('DT - Success: {}% | Fail: {}%'.format(passes_dt / trials * 100, fails_dt / trials * 100))

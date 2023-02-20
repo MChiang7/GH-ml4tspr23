@@ -44,12 +44,19 @@ def best_4_lin_reg(seed=1489683273):
     :return: Returns data that performs significantly better with LinRegLearner than DTLearner.  		  	   		  		 			  		 			     			  	 
     :rtype: numpy.ndarray  		  	   		  		 			  		 			     			  	 
     """  		  	   		  		 			  		 			     			  	 
-    np.random.seed(seed)  		  	   		  		 			  		 			     			  	 
-    x = np.zeros((100, 2))  		  	   		  		 			  		 			     			  	 
-    y = np.random.random(size=(100,)) * 200 - 100  		  	   		  		 			  		 			     			  	 
-    # Here's is an example of creating a Y from randomly generated  		  	   		  		 			  		 			     			  	 
-    # X with multiple columns  		  	   		  		 			  		 			     			  	 
-    # y = x[:,0] + np.sin(x[:,1]) + x[:,2]**2 + x[:,3]**3  		  	   		  		 			  		 			     			  	 
+    np.random.seed(seed)
+    rows = np.random.randint(10, 1000)
+    cols = np.random.randint(2, 10)
+    x = np.random.random(size=(rows, cols)) * 200 - 100
+    coeff = []
+    y = 0
+
+    for i in range(cols):
+        coeff.append(np.random.randint(1, 700))
+
+    for i in range(cols):
+        y += x[:,i] * coeff[i]
+
     return x, y  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
@@ -64,9 +71,11 @@ def best_4_dt(seed=1489683273):
     :return: Returns data that performs significantly better with DTLearner than LinRegLearner.  		  	   		  		 			  		 			     			  	 
     :rtype: numpy.ndarray  		  	   		  		 			  		 			     			  	 
     """  		  	   		  		 			  		 			     			  	 
-    np.random.seed(seed)  		  	   		  		 			  		 			     			  	 
-    x = np.zeros((100, 2))  		  	   		  		 			  		 			     			  	 
-    y = np.random.random(size=(100,)) * 200 - 100  		  	   		  		 			  		 			     			  	 
+    np.random.seed(seed)
+    rows = np.random.randint(10, 1000)
+    cols = np.random.randint(2, 10)
+    x = np.random.random(size=(rows, cols)) * 200 - 100
+    y = np.where(x[:,0] > np.mean(x[:,0]), x[:,0] ** 2, x[:,0] ** 3)
     return x, y  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 

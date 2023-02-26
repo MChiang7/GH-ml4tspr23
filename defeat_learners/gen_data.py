@@ -21,9 +21,9 @@ GT honor code violation.
   		  	   		  		 			  		 			     			  	 
 -----do not edit anything above this line---  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
-Student Name: Tucker Balch (replace with your name)  		  	   		  		 			  		 			     			  	 
-GT User ID: tb34 (replace with your User ID)  		  	   		  		 			  		 			     			  	 
-GT ID: 900897987 (replace with your GT ID)  		  	   		  		 			  		 			     			  	 
+Student Name: Michael Chiang (replace with your name)  		  	   		  		 			  		 			     			  	 
+GT User ID: mchiang30 (replace with your User ID)  		  	   		  		 			  		 			     			  	 
+GT ID: 903216278 (replace with your GT ID)  		  	   		  		 			  		 			     			  	 
 """  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
 import math  		  	   		  		 			  		 			     			  	 

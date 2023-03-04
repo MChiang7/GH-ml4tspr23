@@ -35,12 +35,15 @@ import pandas as pd
 from util import get_data, plot_data  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
-def compute_portvals(  		  	   		  		 			  		 			     			  	 
+def author():
+    return 'mchiang30'
+
+def compute_portvals(
     orders_file="./orders/orders.csv",  		  	   		  		 			  		 			     			  	 
     start_val=1000000,  		  	   		  		 			  		 			     			  	 
     commission=9.95,  		  	   		  		 			  		 			     			  	 
     impact=0.005,  		  	   		  		 			  		 			     			  	 
-):  		  	   		  		 			  		 			     			  	 
+):
     """  		  	   		  		 			  		 			     			  	 
     Computes the portfolio values.  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
@@ -57,20 +60,43 @@ def compute_portvals(
     """  		  	   		  		 			  		 			     			  	 
     # this is the function the autograder will call to test your code  		  	   		  		 			  		 			     			  	 
     # NOTE: orders_file may be a string, or it may be a file object. Your  		  	   		  		 			  		 			     			  	 
-    # code should work correctly with either input  		  	   		  		 			  		 			     			  	 
-    # TODO: Your code here  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-    # In the template, instead of computing the value of the portfolio, we just  		  	   		  		 			  		 			     			  	 
-    # read in the value of IBM over 6 months  		  	   		  		 			  		 			     			  	 
-    start_date = dt.datetime(2008, 1, 1)  		  	   		  		 			  		 			     			  	 
-    end_date = dt.datetime(2008, 6, 1)  		  	   		  		 			  		 			     			  	 
-    portvals = get_data(["IBM"], pd.date_range(start_date, end_date))  		  	   		  		 			  		 			     			  	 
-    portvals = portvals[["IBM"]]  # remove SPY  		  	   		  		 			  		 			     			  	 
-    rv = pd.DataFrame(index=portvals.index, data=portvals.values)  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-    return rv  		  	   		  		 			  		 			     			  	 
-    return portvals  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
+    # code should work correctly with either input
+    data = pd.read_csv(orders_file, index_col='Date', parse_dates=True, na_values=['nan'])
+    stock_df = get_data(['SPY'], pd.date_range(data.index.sort_values()[0], data.index.sort_values()[-1]), addSPY=True, colname='Adj Close').rename(columns={'SPY':'value'})
+    #print(stock_df.index)
+
+    symbol_list = {}
+    share_list = {}
+    temp_val = start_val
+
+    for i in stock_df.index:
+        if i in data.index:
+            if not isinstance(data.loc[i], pd.DataFrame):
+                if data.loc[i].loc['Symbol'] not in symbol_list:
+                    symbol_list[data.loc[i].loc['Symbol']] = get_data([data.loc[i].loc['Symbol']], pd.date_range(i, data.index.sort_values()[-1]), addSPY=True, colname='Adj Close').ffill().bfill()
+                if data.loc[i].loc['Order'] == 'SELL':
+                    sign = -1
+                elif data.loc[i].loc['Order'] == 'BUY':
+                    sign = 1
+                share_list[data.loc[i].loc['Symbol']] = data.loc[i].loc['Shares'] * sign + share_list.get(data.loc[i].loc['Symbol'], 0)
+                temp_val -= (commission * -1 + (impact + sign) * symbol_list[data.loc[i].loc['Symbol']].loc[i].loc[data.loc[i].loc['Symbol']] * data.loc[i].loc['Shares'] * -1) * -1
+            else:
+                for x, y in data.loc[i].iterrows():
+                    if y.loc['Symbol'] not in symbol_list:
+                        symbol_list[y.loc['Symbol']] = get_data([y.loc['Symbol']], pd.date_range(i, data.index.sort_values()[-1]), addSPY=True, colname='Adj Close').ffill().bfill()
+                    if y.loc['Order'] == 'SELL':
+                        sign = -1
+                    elif y.loc['Order'] == 'BUY':
+                        sign = 1
+
+                    share_list[y.loc['Symbol']] = y.loc['Shares'] * sign + share_list.get(y.loc['Symbol'], 0)
+                    temp_val -= (commission * -1 + (impact + sign) * symbol_list[y.loc['Symbol']].loc[i].loc[y.loc['Symbol']] * y.loc['Shares'] * -1) * -1
+
+        temp = 0
+        for j in share_list:
+            temp -= share_list[j] * symbol_list[j].loc[i].loc[j] * -1
+        stock_df.loc[i].loc['value'] = temp + temp_val
+    return stock_df
   		  	   		  		 			  		 			     			  	 
 def test_code():  		  	   		  		 			  		 			     			  	 
     """  		  	   		  		 			  		 			     			  	 
@@ -80,7 +106,7 @@ def test_code():
     # note that during autograding his function will not be called.  		  	   		  		 			  		 			     			  	 
     # Define input parameters  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
-    of = "./orders/orders2.csv"  		  	   		  		 			  		 			     			  	 
+    of = "./orders/orders-02.csv"
     sv = 1000000  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
     # Process orders  		  	   		  		 			  		 			     			  	 

@@ -7,7 +7,7 @@ def author():
 
 def test_code():
     tos = TheoreticallyOptimalStrategy.output(100000, dt.datetime(2008, 1, 1), dt.datetime(2009, 12, 31), 'JPM', True, True)
-    #ind = indicators.report()
+    #ind = indicators.output()
 
 if __name__ == '__main__':
     test_code()

@@ -12,7 +12,7 @@ def author():
 
 
 def compute_portvals(
-        orders_file="./orders/orders.csv",
+        orders_file,
         start_val=1000000,
         commission=9.95,
         impact=0.005,
@@ -20,8 +20,8 @@ def compute_portvals(
     """
     Computes the portfolio values.
 
-    :param orders_file: Path of the order file or the file object
-    :type orders_file: str or file object
+    :param orders_file: Name of the dataframe object
+    :type orders_df: dataframe object
     :param start_val: The starting value of the portfolio
     :type start_val: int
     :param commission: The fixed amount in dollars charged for each transaction (both entry and exit)
@@ -34,9 +34,8 @@ def compute_portvals(
     # this is the function the autograder will call to test your code
     # NOTE: orders_file may be a string, or it may be a file object. Your
     # code should work correctly with either input
-    data = pd.read_csv(orders_file, index_col='Date', parse_dates=True, na_values=['nan'])
-    stock_df = get_data(['SPY'], pd.date_range(data.index.sort_values()[0], data.index.sort_values()[-1]), addSPY=True,
-                        colname='Adj Close').rename(columns={'SPY': 'value'})
+    data = orders_file
+    stock_df = get_data(['SPY'], pd.date_range(data.index.sort_values()[0], data.index.sort_values()[-1]), addSPY=True, colname='Adj Close').rename(columns={'SPY': 'value'})
     # print(stock_df.index)
 
     symbol_list = {}
@@ -44,34 +43,17 @@ def compute_portvals(
     temp_val = start_val
 
     for i in stock_df.index:
-        if i in data.index:
-            if not isinstance(data.loc[i], pd.DataFrame):
-                if data.loc[i].loc['Symbol'] not in symbol_list:
-                    symbol_list[data.loc[i].loc['Symbol']] = get_data([data.loc[i].loc['Symbol']],
-                                                                      pd.date_range(i, data.index.sort_values()[-1]),
-                                                                      addSPY=True, colname='Adj Close').ffill().bfill()
-                if data.loc[i].loc['Order'] == 'SELL':
-                    sign = -1
-                elif data.loc[i].loc['Order'] == 'BUY':
-                    sign = 1
-                share_list[data.loc[i].loc['Symbol']] = data.loc[i].loc['Shares'] * sign + share_list.get(
-                    data.loc[i].loc['Symbol'], 0)
-                temp_val -= (commission * -1 + (impact + sign) * symbol_list[data.loc[i].loc['Symbol']].loc[i].loc[
-                    data.loc[i].loc['Symbol']] * data.loc[i].loc['Shares'] * -1) * -1
+        if data.columns[0] not in symbol_list:
+            symbol_list[data.columns[0]] = get_data([data.columns[0]], pd.date_range(i, data.index.sort_values()[-1]), addSPY=True, colname='Adj Close').ffill().bfill()
+        if data.loc[i].loc[data.columns[0]] != 0:
+            if data.loc[i].loc[data.columns[0]] > 0:
+                sign = 1
+                share_list[data.columns[0]] = data.loc[i].loc[data.columns[0]] * sign + share_list.get(data.columns[0], 0)
+                temp_val -= (commission * -1 + (impact + sign) * symbol_list[data.columns[0]].loc[i].loc[data.columns[0]] * data.loc[i].loc[data.columns[0]] * -1) * -1
             else:
-                for x, y in data.loc[i].iterrows():
-                    if y.loc['Symbol'] not in symbol_list:
-                        symbol_list[y.loc['Symbol']] = get_data([y.loc['Symbol']],
-                                                                pd.date_range(i, data.index.sort_values()[-1]),
-                                                                addSPY=True, colname='Adj Close').ffill().bfill()
-                    if y.loc['Order'] == 'SELL':
-                        sign = -1
-                    elif y.loc['Order'] == 'BUY':
-                        sign = 1
-
-                    share_list[y.loc['Symbol']] = y.loc['Shares'] * sign + share_list.get(y.loc['Symbol'], 0)
-                    temp_val -= (commission * -1 + (impact + sign) * symbol_list[y.loc['Symbol']].loc[i].loc[
-                        y.loc['Symbol']] * y.loc['Shares'] * -1) * -1
+                sign = -1
+                share_list[data.columns[0]] = abs(data.loc[i].loc[data.columns[0]]) * sign + share_list.get(data.columns[0], 0)
+                temp_val -= (commission * -1 + (impact + sign) * symbol_list[data.columns[0]].loc[i].loc[data.columns[0]] * abs(data.loc[i].loc[data.columns[0]]) * -1) * -1
 
         temp = 0
         for j in share_list:

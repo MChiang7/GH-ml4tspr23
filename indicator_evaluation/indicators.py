@@ -66,7 +66,7 @@ def exponential_moving_average(sd, ed, symbol, window_size, gen_plot = False):
         plt.ylabel('Normalized Values')
 
         plt.plot(normalized_prices, label='Price', color='blue')
-        plt.plot(normalized_ema, label='{} days EMA'.format(window_size), color='red')
+        plt.plot(normalized_ema, label='EMA {}'.format(window_size), color='red')
 
         plt.legend()
         plt.grid()

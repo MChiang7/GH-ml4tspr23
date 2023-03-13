@@ -29,7 +29,7 @@ class TheoreticallyOptimalStrategy(object):
 def author(self):
     return 'mchiang30'
 
-def output(sv, sd, ed, symbol, stats=False, plot=False):
+def output(sv, sd, ed, symbol, gen_stats=False, gen_plot=False):
     trades = get_data(['SPY'], pd.date_range(sd, ed)).rename(columns={'SPY':'JPM'})
     for col in trades.columns:
         trades[col].values[:] = 0
@@ -38,7 +38,7 @@ def output(sv, sd, ed, symbol, stats=False, plot=False):
     benchmark_val = mkt_sim.compute_portvals(trades, sv, commission=0.00, impact=0.00)
     theoretical_val = mkt_sim.compute_portvals(TheoreticallyOptimalStrategy().testPolicy(symbol, sd=sd, ed=ed, sv=sv), sv, commission=0.00, impact=0.00)
 
-    if plot:
+    if gen_plot:
         plt.figure(figsize=(12, 9))
         plt.title('Theoretically Optimal Strategy vs Benchmark for JPM')
         plt.xlabel('Dates')
@@ -55,7 +55,7 @@ def output(sv, sd, ed, symbol, stats=False, plot=False):
         #plt.show()
         plt.clf()
 
-    if stats:
+    if gen_stats:
         benchmark_cum_ret = benchmark_val['value'][-1] / benchmark_val['value'][0] - 1
         benchmark_std_daily_ret = ((benchmark_val['value'] / benchmark_val['value'].shift(1) - 1).iloc[1:]).std()
         benchmark_mean_daily_ret = ((benchmark_val['value'] / benchmark_val['value'].shift(1) - 1).iloc[1:]).mean()

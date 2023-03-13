@@ -54,8 +54,6 @@ def bollinger_band(sd, ed, symbol, window_size, gen_plot=False):
 def exponential_moving_average(sd, ed, symbol, window_size, gen_plot = False):
     prices = get_data([symbol], pd.date_range(sd - dt.timedelta(window_size * 2), ed))[[symbol]].ffill().bfill()
 
-    ema_df = prices.ewm(span=window_size, adjust=False).mean().truncate(before=sd)
-
     normalized_prices = prices.truncate(before=sd)[symbol] / prices.truncate(before=sd)[symbol][0]
     normalized_ema = prices.ewm(span=window_size, adjust=False).mean().truncate(before=sd)[symbol] / prices.ewm(span=window_size, adjust=False).mean().truncate(before=sd)[symbol][0]
 

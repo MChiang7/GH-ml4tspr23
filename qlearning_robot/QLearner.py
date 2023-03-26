@@ -70,24 +70,59 @@ class QLearner(object):
         self.verbose = verbose  		  	   		  		 			  		 			     			  	 
         self.num_actions = num_actions  		  	   		  		 			  		 			     			  	 
         self.s = 0  		  	   		  		 			  		 			     			  	 
-        self.a = 0  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-    def querysetstate(self, s):  		  	   		  		 			  		 			     			  	 
-        """  		  	   		  		 			  		 			     			  	 
-        Update the state without updating the Q-table  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-        :param s: The new state  		  	   		  		 			  		 			     			  	 
-        :type s: int  		  	   		  		 			  		 			     			  	 
-        :return: The selected action  		  	   		  		 			  		 			     			  	 
-        :rtype: int  		  	   		  		 			  		 			     			  	 
-        """  		  	   		  		 			  		 			     			  	 
-        self.s = s  		  	   		  		 			  		 			     			  	 
-        action = rand.randint(0, self.num_actions - 1)  		  	   		  		 			  		 			     			  	 
-        if self.verbose:  		  	   		  		 			  		 			     			  	 
-            print(f"s = {s}, a = {action}")  		  	   		  		 			  		 			     			  	 
-        return action  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-    def query(self, s_prime, r):  		  	   		  		 			  		 			     			  	 
+        self.a = 0
+
+        self.alpha = alpha
+        self.gamma = gamma
+        self.rar = rar
+        self.radr = radr
+        self.dyna = dyna
+        self.q_table = np.zeros((num_states, num_actions))
+
+        if dyna > 0:
+            self.previous = {}
+            self.t_table = np.zeros((num_states, num_actions, num_states))
+            self.r_table = np.zeros((num_states, num_actions))
+
+    def author(self):
+        return 'mchiang30'
+
+    def hallucinate(self):
+        temp_state = rand.choice(list(self.previous.keys()))
+        temp_action = rand.choice(self.previous[temp_state])
+
+        self.update(temp_state, temp_action, np.argmax(self.t_table[temp_state, temp_action]), self.r_table[temp_state, temp_action], 0)
+
+    def update(self, s, a, s_prime, r, table):
+        if table == 0:
+            self.q_table[s, a] = (-self.alpha * (np.max(self.q_table[s_prime]) * -self.gamma - r) - self.q_table[s, a] * (self.alpha - 1))
+        elif table == 1:
+            self.r_table[s, a] = self.alpha * r - (self.alpha - 1) * self.r_table[s, a]
+
+    def querysetstate(self, s):
+        """
+        Update the state without updating the Q-table
+
+        :param s: The new state
+        :type s: int
+        :return: The selected action
+        :rtype: int
+        """
+
+        if self.rar <= rand.random():
+            action = np.argmax(self.q_table[s])
+        else:
+            action = rand.randint(0, (1 - self.num_actions) * -1)
+
+        if self.verbose:
+            print(f"s = {s}, a = {action}")
+
+        self.s = s
+
+        return action
+
+
+    def query(self, s_prime, r):
         """  		  	   		  		 			  		 			     			  	 
         Update the Q table and return an action  		  	   		  		 			  		 			     			  	 
   		  	   		  		 			  		 			     			  	 
@@ -97,12 +132,24 @@ class QLearner(object):
         :type r: float  		  	   		  		 			  		 			     			  	 
         :return: The selected action  		  	   		  		 			  		 			     			  	 
         :rtype: int  		  	   		  		 			  		 			     			  	 
-        """  		  	   		  		 			  		 			     			  	 
-        action = rand.randint(0, self.num_actions - 1)  		  	   		  		 			  		 			     			  	 
-        if self.verbose:  		  	   		  		 			  		 			     			  	 
-            print(f"s = {s_prime}, a = {action}, r={r}")  		  	   		  		 			  		 			     			  	 
-        return action  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-if __name__ == "__main__":  		  	   		  		 			  		 			     			  	 
+        """
+        self.update(self.s, self.a, s_prime, r, 0)
+
+        if self.dyna > 0:
+            self.previous[self.s] = list(set([self.a]) | set(self.previous.get(self.s, [])))
+
+            self.t_table[self.s, self.a, s_prime] += 1
+            self.update(self.s, self.a, s_prime, r, 1)
+
+
+            for i in range(self.dyna):
+                self.hallucinate()
+
+        self.rar *= self.radr
+        action = self.querysetstate(s_prime)
+        self.a = action
+
+        return action
+
+if __name__ == "__main__":
     print("Remember Q from Star Trek? Well, this isn't him")  		  	   		  		 			  		 			     			  	 

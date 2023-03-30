@@ -152,4 +152,5 @@ class QLearner(object):
         return action
 
 if __name__ == "__main__":
-    print("Remember Q from Star Trek? Well, this isn't him")  		  	   		  		 			  		 			     			  	 
+    #print("Remember Q from Star Trek? Well, this isn't him")
+    pass

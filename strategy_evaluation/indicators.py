@@ -30,6 +30,7 @@ def goldenx(sd, ed, symbol, window_size=20, gen_plot=False):
         plt.savefig('./images/goldenx.png')
         #plt.show()
         plt.clf()
+
     return gx_s, gx_l
 
 def macd(sd, ed, symbol, gen_plot = False):
@@ -101,6 +102,7 @@ def momentum(sd, ed, symbol, window_size=30, gen_plot=False):
         plt.savefig('./images/momentum.png')
         # plt.show()
         plt.clf()
+
     return momentum
 
 if __name__ == "__main__":

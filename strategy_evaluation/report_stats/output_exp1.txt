@@ -751,3 +751,45 @@ Mean Return: -0.000137
 --------------------
 
 
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+
+
+Strategy - In Sample
+Cumulative Return: 0.141893
+Std Return: 0.004964
+Mean Return: 0.000275
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+
+
+Strategy - Out Sample
+Cumulative Return: -0.108183
+Std Return: 0.002247
+Mean Return: -0.000225
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+--------------------
+
+

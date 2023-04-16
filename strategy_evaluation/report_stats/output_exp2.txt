@@ -191,3 +191,34 @@ Cumulative Return Benchmark: 0.012517
 --------------------
 
 
+Impact 0.0
+Cumulative Return Strategy: 0.453700
+Cumulative Return Benchmark: 0.012300
+% Change in Cumulative Returns: 3588.617886
+97 total number of entries: 51 SHORT, 46 LONG
+
+
+Impact 0.005
+Cumulative Return Strategy: 0.194434
+Cumulative Return Benchmark: 0.012324
+% Change in Cumulative Returns: 1477.719570
+53 total number of entries: 43 SHORT, 10 LONG
+
+
+Impact 0.015
+Cumulative Return Strategy: -0.018296
+Cumulative Return Benchmark: 0.012371
+% Change in Cumulative Returns: -247.889617
+31 total number of entries: 28 SHORT, 3 LONG
+
+
+Impact 0.045
+Cumulative Return Strategy: -0.023548
+Cumulative Return Benchmark: 0.012517
+% Change in Cumulative Returns: -288.132917
+1 total number of entries: 1 SHORT, 0 LONG
+
+
+--------------------
+
+

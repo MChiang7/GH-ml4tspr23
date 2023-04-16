@@ -10,7 +10,7 @@ def author():
 def report():
     random.seed(42)
 
-    stat = True
+    stat = False
 
     ManualStrategy.report(symbol='JPM',
                 sd_in=dt.datetime(2008, 1, 1),

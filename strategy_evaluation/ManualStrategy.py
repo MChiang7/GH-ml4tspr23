@@ -13,7 +13,7 @@ class ManualStrategy(object):
     def author(self):
         return 'mchiang30'
 
-    def testPolicy(self, symbol='JPM', sd=dt.datetime(2008, 1, 1), ed=dt.datetime(2009,12,31)):
+    def testPolicy(self, symbol='JPM', sd=dt.datetime(2008, 1, 1), ed=dt.datetime(2009, 12, 31), sv=100000):
         prices = get_data([[symbol][0]], pd.date_range(sd, ed))[[[symbol][0]]].ffill().bfill()
         trades = get_data([[symbol][0]], pd.date_range(sd, ed))[['SPY']].rename(columns={'SPY':[symbol][0]})
         normalized_prices = (prices[symbol] / prices[symbol][0]).to_frame()
@@ -78,10 +78,17 @@ class ManualStrategy(object):
             else:
                 sign = 0
 
+
             if temp_action >= 5:
                 trades.loc[trades.index[i]].loc[symbol] = (temp_pos - sign * 1000) * -1
                 temp_pos += (temp_pos - sign * 1000) * -1
                 temp_action = 0
+
+            '''
+            trades.loc[trades.index[i]].loc[symbol] = (temp_pos - sign * 1000) * -1
+            temp_pos += (temp_pos - sign * 1000) * -1
+            temp_action = 0
+            '''
 
         return trades
 
@@ -133,8 +140,8 @@ def entries(trades, symbol):
     return short_entries, long_entries
 
 def report(symbol='JPM',
-                sd_in=dt.datetime(2008,1,1),
-                ed_in=dt.datetime(2009,12,31),
+                sd_in=dt.datetime(2008, 1, 1),
+                ed_in=dt.datetime(2009, 12, 31),
                 sd_out=dt.datetime(2010, 1, 1),
                 ed_out=dt.datetime(2011, 12, 31),
                 sv=100000,

@@ -1,148 +1,175 @@
-""""""  		  	   		  		 			  		 			     			  	 
-"""  		  	   		  		 			  		 			     			  	 
-Template for implementing StrategyLearner  (c) 2016 Tucker Balch  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-Copyright 2018, Georgia Institute of Technology (Georgia Tech)  		  	   		  		 			  		 			     			  	 
-Atlanta, Georgia 30332  		  	   		  		 			  		 			     			  	 
-All Rights Reserved  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-Template code for CS 4646/7646  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-Georgia Tech asserts copyright ownership of this template and all derivative  		  	   		  		 			  		 			     			  	 
-works, including solutions to the projects assigned in this course. Students  		  	   		  		 			  		 			     			  	 
-and other users of this template code are advised not to share it with others  		  	   		  		 			  		 			     			  	 
-or to make it available on publicly viewable websites including repositories  		  	   		  		 			  		 			     			  	 
-such as github and gitlab.  This copyright statement should not be removed  		  	   		  		 			  		 			     			  	 
-or edited.  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-We do grant permission to share solutions privately with non-students such  		  	   		  		 			  		 			     			  	 
-as potential employers. However, sharing with other current or future  		  	   		  		 			  		 			     			  	 
-students of CS 7646 is prohibited and subject to being investigated as a  		  	   		  		 			  		 			     			  	 
-GT honor code violation.  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
------do not edit anything above this line---  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-Student Name: Michael Chiang (replace with your name)  		  	   		  		 			  		 			     			  	 
-GT User ID: mchiang30 (replace with your User ID)  		  	   		  		 			  		 			     			  	 
-GT ID: 903216278 (replace with your GT ID)  		  	   		  		 			  		 			     			  	 
-"""  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-import datetime as dt  		  	   		  		 			  		 			     			  	 
-import random  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-import pandas as pd  		  	   		  		 			  		 			     			  	 
-import util as ut  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-class StrategyLearner(object):  		  	   		  		 			  		 			     			  	 
-    """  		  	   		  		 			  		 			     			  	 
-    A strategy learner that can learn a trading policy using the same indicators used in ManualStrategy.  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-    :param verbose: If “verbose” is True, your code can print out information for debugging.  		  	   		  		 			  		 			     			  	 
-        If verbose = False your code should not generate ANY output.  		  	   		  		 			  		 			     			  	 
-    :type verbose: bool  		  	   		  		 			  		 			     			  	 
-    :param impact: The market impact of each transaction, defaults to 0.0  		  	   		  		 			  		 			     			  	 
-    :type impact: float  		  	   		  		 			  		 			     			  	 
-    :param commission: The commission amount charged, defaults to 0.0  		  	   		  		 			  		 			     			  	 
-    :type commission: float  		  	   		  		 			  		 			     			  	 
-    """  		  	   		  		 			  		 			     			  	 
-    # constructor  		  	   		  		 			  		 			     			  	 
-    def __init__(self, verbose=False, impact=0.0, commission=0.0):  		  	   		  		 			  		 			     			  	 
-        """  		  	   		  		 			  		 			     			  	 
-        Constructor method  		  	   		  		 			  		 			     			  	 
-        """  		  	   		  		 			  		 			     			  	 
-        self.verbose = verbose  		  	   		  		 			  		 			     			  	 
-        self.impact = impact  		  	   		  		 			  		 			     			  	 
-        self.commission = commission  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-    # this method should create a QLearner, and train it for trading  		  	   		  		 			  		 			     			  	 
-    def add_evidence(  		  	   		  		 			  		 			     			  	 
-        self,  		  	   		  		 			  		 			     			  	 
-        symbol="IBM",  		  	   		  		 			  		 			     			  	 
-        sd=dt.datetime(2008, 1, 1),  		  	   		  		 			  		 			     			  	 
-        ed=dt.datetime(2009, 1, 1),  		  	   		  		 			  		 			     			  	 
-        sv=10000,  		  	   		  		 			  		 			     			  	 
-    ):  		  	   		  		 			  		 			     			  	 
-        """  		  	   		  		 			  		 			     			  	 
-        Trains your strategy learner over a given time frame.  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-        :param symbol: The stock symbol to train on  		  	   		  		 			  		 			     			  	 
-        :type symbol: str  		  	   		  		 			  		 			     			  	 
-        :param sd: A datetime object that represents the start date, defaults to 1/1/2008  		  	   		  		 			  		 			     			  	 
-        :type sd: datetime  		  	   		  		 			  		 			     			  	 
-        :param ed: A datetime object that represents the end date, defaults to 1/1/2009  		  	   		  		 			  		 			     			  	 
-        :type ed: datetime  		  	   		  		 			  		 			     			  	 
-        :param sv: The starting value of the portfolio  		  	   		  		 			  		 			     			  	 
-        :type sv: int  		  	   		  		 			  		 			     			  	 
-        """  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-        # add your code to do learning here  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-        # example usage of the old backward compatible util function  		  	   		  		 			  		 			     			  	 
-        syms = [symbol]  		  	   		  		 			  		 			     			  	 
-        dates = pd.date_range(sd, ed)  		  	   		  		 			  		 			     			  	 
-        prices_all = ut.get_data(syms, dates)  # automatically adds SPY  		  	   		  		 			  		 			     			  	 
-        prices = prices_all[syms]  # only portfolio symbols  		  	   		  		 			  		 			     			  	 
-        prices_SPY = prices_all["SPY"]  # only SPY, for comparison later  		  	   		  		 			  		 			     			  	 
-        if self.verbose:  		  	   		  		 			  		 			     			  	 
-            print(prices)  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-        # example use with new colname  		  	   		  		 			  		 			     			  	 
-        volume_all = ut.get_data(  		  	   		  		 			  		 			     			  	 
-            syms, dates, colname="Volume"  		  	   		  		 			  		 			     			  	 
-        )  # automatically adds SPY  		  	   		  		 			  		 			     			  	 
-        volume = volume_all[syms]  # only portfolio symbols  		  	   		  		 			  		 			     			  	 
-        volume_SPY = volume_all["SPY"]  # only SPY, for comparison later  		  	   		  		 			  		 			     			  	 
-        if self.verbose:  		  	   		  		 			  		 			     			  	 
-            print(volume)  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-    # this method should use the existing policy and test it against new data  		  	   		  		 			  		 			     			  	 
-    def testPolicy(  		  	   		  		 			  		 			     			  	 
-        self,  		  	   		  		 			  		 			     			  	 
-        symbol="IBM",  		  	   		  		 			  		 			     			  	 
-        sd=dt.datetime(2009, 1, 1),  		  	   		  		 			  		 			     			  	 
-        ed=dt.datetime(2010, 1, 1),  		  	   		  		 			  		 			     			  	 
-        sv=10000,  		  	   		  		 			  		 			     			  	 
-    ):  		  	   		  		 			  		 			     			  	 
-        """  		  	   		  		 			  		 			     			  	 
-        Tests your learner using data outside of the training data  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-        :param symbol: The stock symbol that you trained on on  		  	   		  		 			  		 			     			  	 
-        :type symbol: str  		  	   		  		 			  		 			     			  	 
-        :param sd: A datetime object that represents the start date, defaults to 1/1/2008  		  	   		  		 			  		 			     			  	 
-        :type sd: datetime  		  	   		  		 			  		 			     			  	 
-        :param ed: A datetime object that represents the end date, defaults to 1/1/2009  		  	   		  		 			  		 			     			  	 
-        :type ed: datetime  		  	   		  		 			  		 			     			  	 
-        :param sv: The starting value of the portfolio  		  	   		  		 			  		 			     			  	 
-        :type sv: int  		  	   		  		 			  		 			     			  	 
-        :return: A DataFrame with values representing trades for each day. Legal values are +1000.0 indicating  		  	   		  		 			  		 			     			  	 
-            a BUY of 1000 shares, -1000.0 indicating a SELL of 1000 shares, and 0.0 indicating NOTHING.  		  	   		  		 			  		 			     			  	 
-            Values of +2000 and -2000 for trades are also legal when switching from long to short or short to  		  	   		  		 			  		 			     			  	 
-            long so long as net holdings are constrained to -1000, 0, and 1000.  		  	   		  		 			  		 			     			  	 
-        :rtype: pandas.DataFrame  		  	   		  		 			  		 			     			  	 
-        """  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-        # here we build a fake set of trades  		  	   		  		 			  		 			     			  	 
-        # your code should return the same sort of data  		  	   		  		 			  		 			     			  	 
-        dates = pd.date_range(sd, ed)  		  	   		  		 			  		 			     			  	 
-        prices_all = ut.get_data([symbol], dates)  # automatically adds SPY  		  	   		  		 			  		 			     			  	 
-        trades = prices_all[[symbol,]]  # only portfolio symbols  		  	   		  		 			  		 			     			  	 
-        trades_SPY = prices_all["SPY"]  # only SPY, for comparison later  		  	   		  		 			  		 			     			  	 
-        trades.values[:, :] = 0  # set them all to nothing  		  	   		  		 			  		 			     			  	 
-        trades.values[0, :] = 1000  # add a BUY at the start  		  	   		  		 			  		 			     			  	 
-        trades.values[40, :] = -1000  # add a SELL  		  	   		  		 			  		 			     			  	 
-        trades.values[41, :] = 1000  # add a BUY  		  	   		  		 			  		 			     			  	 
-        trades.values[60, :] = -2000  # go short from long  		  	   		  		 			  		 			     			  	 
-        trades.values[61, :] = 2000  # go long from short  		  	   		  		 			  		 			     			  	 
-        trades.values[-1, :] = -1000  # exit on the last day  		  	   		  		 			  		 			     			  	 
-        if self.verbose:  		  	   		  		 			  		 			     			  	 
-            print(type(trades))  # it better be a DataFrame!  		  	   		  		 			  		 			     			  	 
-        if self.verbose:  		  	   		  		 			  		 			     			  	 
-            print(trades)  		  	   		  		 			  		 			     			  	 
-        if self.verbose:  		  	   		  		 			  		 			     			  	 
-            print(prices_all)  		  	   		  		 			  		 			     			  	 
-        return trades  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-  		  	   		  		 			  		 			     			  	 
-if __name__ == "__main__":  		  	   		  		 			  		 			     			  	 
-    print("One does not simply think up a strategy")  		  	   		  		 			  		 			     			  	 
+import pandas as pd
+import datetime as dt
+from util import get_data
+import QLearner
+import indicators
+import marketsimcode as mkt_sim
+
+
+class StrategyLearner(object):
+
+    def __init__(self, verbose=False, impact=0.0, commission=0.0):
+        self.impact = impact
+        self.commission = commission
+        self.verbose = verbose
+        self.learner = QLearner.QLearner(num_states=233344,
+                                         num_actions=3,
+                                         alpha=0.2,
+                                         gamma=0.9,
+                                         rar=0.5,
+                                         radr=0.99,
+                                         dyna=0,
+                                         verbose=False)
+
+    def author(self):
+        return 'mchiang30'
+
+    def add_evidence(self, symbol='JPM',
+                     sd=dt.datetime(2008, 1, 1),
+                     ed=dt.datetime(2009, 1, 1),
+                     sv=10000):
+
+        goldenx, macd, momentum, bb, ema = discretize(sd, ed, symbol)
+
+        prices = get_data([[symbol][0]], pd.date_range(sd, ed))[[[symbol][0]]].ffill().bfill()
+        trades = get_data([[symbol][0]], pd.date_range(sd, ed))[['SPY']].rename(columns={'SPY':[symbol][0]})
+        normalized_prices = (prices[symbol] / prices[symbol][0]).to_frame()
+
+        for col in trades.columns:
+            trades[col].values[:] = 0
+
+        temp_cash = sv
+        temp_pos = 0
+
+        for i in range(1, len(prices.index)):
+            s_prime = get_state(temp_pos, goldenx.loc[prices.index[i]], macd.loc[prices.index[i]], momentum.loc[prices.index[i]], bb.loc[prices.index[i]], ema.loc[prices.index[i]])
+
+            if temp_pos == 0:
+                rsign = 0
+            elif temp_pos > 0:
+                rsign = 1
+            else:
+                rsign = -1
+
+            r = (((prices.loc[prices.index[i]].loc[symbol] * (1 - self.impact * rsign)) / prices.loc[prices.index[i - 1]].loc[symbol]) - 1) * rsign
+
+            temp_action = self.learner.query(s_prime, r)
+            if temp_action == 1:
+                asign = 0
+            elif temp_action == 0:
+                asign = -1
+            else:
+                asign = 1
+
+            temp_trade = asign * 1000 - temp_pos
+            temp_pos += temp_trade
+            trades.loc[prices.index[i]].loc[symbol] = temp_trade
+
+            if temp_trade > 0:
+                isign = 1
+            else:
+                isign = -1
+
+            temp_cash += -prices.loc[prices.index[i]].loc[symbol] * (1 + self.impact * isign) * temp_trade
+
+    def testPolicy(self, symbol='JPM',
+                   sd=dt.datetime(2009, 1, 1),
+                   ed=dt.datetime(2010, 1, 1),
+                   sv=10000):
+
+        self.learner.rar = 0
+
+        goldenx, macd, momentum, bb, ema = discretize(sd, ed, symbol)
+
+
+        prices = get_data([[symbol][0]], pd.date_range(sd, ed))[[[symbol][0]]].ffill().bfill()
+        trades = get_data([[symbol][0]], pd.date_range(sd, ed))[['SPY']].rename(columns={'SPY':[symbol][0]})
+        normalized_prices = (prices[symbol] / prices[symbol][0]).to_frame()
+
+        for col in trades.columns:
+            trades[col].values[:] = 0
+
+        temp_pos = 0
+
+        for i in range(1, len(prices.index)):
+            s_prime = get_state(temp_pos, goldenx.loc[prices.index[i]], macd.loc[prices.index[i]], momentum.loc[prices.index[i]], bb.loc[prices.index[i]], ema.loc[prices.index[i]])
+
+            temp_action = self.learner.querysetstate(s_prime)
+            if temp_action == 1:
+                asign = 0
+            elif temp_action == 0:
+                asign = -1
+            else:
+                asign = 1
+
+            temp_trade = asign * 1000 - temp_pos
+            temp_pos += temp_trade
+            trades.loc[prices.index[i]].loc[symbol] = temp_trade
+
+        return trades
+
+
+def discretize(sd, ed, symbol):
+    prices = get_data([[symbol][0]], pd.date_range(sd, ed))[[[symbol][0]]].ffill().bfill()
+    normalized_prices = prices[symbol] / prices[symbol][0]
+
+    gx_s, gx_l = indicators.goldenx(sd, ed, symbol, window_size=20, gen_plot=False)
+    discretized_goldenx = gx_s.copy()
+    discretized_goldenx[gx_s > gx_l] = 0
+    discretized_goldenx[gx_s < gx_l] = 1
+    discretized_goldenx[gx_s == gx_l] = 2
+    discretized_goldenx[gx_s.isnull() | gx_l.isnull()] = 3
+
+    macd_raw, macd_signal = indicators.macd(sd, ed, symbol)
+    discretized_macd = macd_raw.copy()
+    discretized_macd[macd_raw > macd_signal] = 0
+    discretized_macd[macd_raw < macd_signal] = 1
+    discretized_macd[macd_raw == macd_signal] = 2
+    discretized_macd[macd_raw.isnull() | macd_signal.isnull()] = 3
+
+    momentum = indicators.momentum(sd, ed, symbol, gen_plot=False)
+    discretized_momentum = momentum.copy()
+    discretized_momentum[momentum < -0.5] = 0
+    discretized_momentum[(momentum >= -0.5) & (momentum <= 0.0)] = 1
+    discretized_momentum[(momentum > 0.0) & (momentum <= 0.5)] = 2
+    discretized_momentum[momentum.isnull()] = 3
+
+    bb = indicators.bollinger_band(sd, ed, symbol, window_size=20, gen_plot=False)
+    discretized_bb = bb.copy()
+    discretized_bb[bb < -1.0] = 0
+    discretized_bb[(bb >= -1.0) & (bb <= 0.0)] = 1
+    discretized_bb[(bb > 0.0) & (bb <= 1.0)] = 2
+    discretized_bb[bb > 1.0] = 3
+    discretized_bb[bb.isnull()] = 4
+
+    ema = indicators.exponential_moving_average(sd, ed, symbol, window_size=20, gen_plot=False)
+    discretized_ema = ema.copy()
+    discretized_ema[ema < normalized_prices] = 0
+    discretized_ema[ema > normalized_prices] = 1
+    discretized_ema[ema == normalized_prices] = 2
+    discretized_ema[ema.isnull()] = 3
+
+    return discretized_goldenx, discretized_macd, discretized_momentum, discretized_bb, discretized_ema
+
+
+def get_state(position, golden_x, macd, momentum, bb, ema):
+    string_state = '0'
+    if position == 0:
+        string_state += '1'
+    elif position == 1000:
+        string_state += '2'
+    string_state += golden_x.astype(int).astype(str) + macd.astype(int).astype(str) + momentum.astype(int).astype(str) + bb.astype(int).astype(str) + ema.astype(int).astype(str)
+    #string_state += golden_x.astype(int).astype(str) + macd.astype(int).astype(str) + bb.astype(int).astype(str)
+    return int(string_state)
+
+
+def benchmark(symbol, sd, ed, sv, commission, impact):
+    trades = get_data(['SPY'], pd.date_range(sd, ed)).rename(columns={'SPY': symbol})
+    for col in trades.columns:
+        trades[col].values[:] = 0
+    trades.loc[trades.index[0]] = 1000
+    val = mkt_sim.compute_portvals(trades, start_val=sv, commission=commission, impact=impact)
+    return val
+
+if __name__ == "__main__":
+    pass

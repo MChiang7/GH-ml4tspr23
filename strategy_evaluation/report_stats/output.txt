@@ -178,3 +178,534 @@ Std Return: 0.008500
 Mean Return: -0.000137
 
 
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+
+
+Strategy - In Sample
+Cumulative Return: 0.098397
+Std Return: 0.013824
+Mean Return: 0.000281
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+
+
+Strategy - Out Sample
+Cumulative Return: 0.166630
+Std Return: 0.004668
+Mean Return: 0.000317
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+--------------------
+
+
+Strategy - In Sample
+Cumulative Return: -0.426840
+Std Return: 0.019985
+Mean Return: -0.000905
+--------------------
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+--------------------
+
+
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+--------------------
+
+
+Strategy - Out Sample
+Cumulative Return: 0.003612
+Std Return: 0.007514
+Mean Return: 0.000035
+--------------------
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+--------------------
+
+
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+
+
+Strategy - In Sample
+Cumulative Return: -0.426840
+Std Return: 0.019985
+Mean Return: -0.000905
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+
+
+Strategy - Out Sample
+Cumulative Return: 0.003612
+Std Return: 0.007514
+Mean Return: 0.000035
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+--------------------
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+
+
+Strategy - In Sample
+Cumulative Return: -0.166699
+Std Return: 0.017664
+Mean Return: -0.000206
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+++++++++++++++++++++
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+
+
+Strategy - Out Sample
+Cumulative Return: -0.071004
+Std Return: 0.008434
+Mean Return: -0.000111
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+--------------------
+Manual - In Sample
+Cumulative Return: 0.185380
+Std Return: 0.012486
+Mean Return: 0.000415
+
+
+Strategy - In Sample
+Cumulative Return: -0.166699
+Std Return: 0.017664
+Mean Return: -0.000206
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: -0.102126
+Std Return: 0.007542
+Mean Return: -0.000186
+
+
+Strategy - Out Sample
+Cumulative Return: -0.071004
+Std Return: 0.008434
+Mean Return: -0.000111
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+--------------------
+
+
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+
+
+Strategy - In Sample
+Cumulative Return: -0.166699
+Std Return: 0.017664
+Mean Return: -0.000206
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+
+
+Strategy - Out Sample
+Cumulative Return: -0.071004
+Std Return: 0.008434
+Mean Return: -0.000111
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+--------------------
+
+
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+
+
+Strategy - In Sample
+Cumulative Return: 0.363307
+Std Return: 0.007387
+Mean Return: 0.000642
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+
+
+Strategy - Out Sample
+Cumulative Return: -0.104431
+Std Return: 0.004517
+Mean Return: -0.000209
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+--------------------
+
+
+Manual - In Sample
+Cumulative Return: -0.170767
+Std Return: 0.016207
+Mean Return: -0.000241
+
+
+Strategy - In Sample
+Cumulative Return: -1.035490
+Std Return: 1.144676
+Mean Return: 0.039586
+
+
+Benchmark - In Sample
+Cumulative Return: 0.287611
+Std Return: 0.019547
+Mean Return: 0.000691
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: -0.184659
+Std Return: 0.022267
+Mean Return: -0.000158
+
+
+Strategy - Out Sample
+Cumulative Return: -0.904372
+Std Return: 0.895271
+Mean Return: 0.021644
+
+
+Benchmark - Out Sample
+Cumulative Return: 0.557474
+Std Return: 0.015565
+Mean Return: 0.001002
+
+
+--------------------
+
+
+Manual - In Sample
+Cumulative Return: -1.414397
+Std Return: 0.555478
+Mean Return: -0.036748
+
+
+Strategy - In Sample
+Cumulative Return: -0.049812
+Std Return: 0.021168
+Mean Return: 0.000118
+
+
+Benchmark - In Sample
+Cumulative Return: 0.159766
+Std Return: 13.248345
+Mean Return: -0.027493
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: 1.085536
+Std Return: 0.033575
+Mean Return: 0.002011
+
+
+Strategy - Out Sample
+Cumulative Return: -2.905238
+Std Return: 3.467702
+Mean Return: 0.212512
+
+
+Benchmark - Out Sample
+Cumulative Return: 1.922374
+Std Return: 0.028567
+Mean Return: 0.002540
+
+
+--------------------
+
+
+Manual - In Sample
+Cumulative Return: -1.414397
+Std Return: 0.555478
+Mean Return: -0.036748
+
+
+Strategy - In Sample
+Cumulative Return: 0.000000
+Std Return: 0.000000
+Mean Return: 0.000000
+
+
+Benchmark - In Sample
+Cumulative Return: 0.159766
+Std Return: 13.248345
+Mean Return: -0.027493
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: 1.085536
+Std Return: 0.033575
+Mean Return: 0.002011
+
+
+Strategy - Out Sample
+Cumulative Return: 0.000000
+Std Return: 0.000000
+Mean Return: 0.000000
+
+
+Benchmark - Out Sample
+Cumulative Return: 1.922374
+Std Return: 0.028567
+Mean Return: 0.002540
+
+
+--------------------
+
+
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+
+
+Strategy - In Sample
+Cumulative Return: 0.000000
+Std Return: 0.000000
+Mean Return: 0.000000
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+
+
+Strategy - Out Sample
+Cumulative Return: 0.000000
+Std Return: 0.000000
+Mean Return: 0.000000
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+--------------------
+
+
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+
+
+Strategy - In Sample
+Cumulative Return: 0.000000
+Std Return: 0.000000
+Mean Return: 0.000000
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+
+
+Strategy - Out Sample
+Cumulative Return: 0.000000
+Std Return: 0.000000
+Mean Return: 0.000000
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+--------------------
+
+
+Manual - In Sample
+Cumulative Return: 0.231483
+Std Return: 0.011418
+Mean Return: 0.000478
+
+
+Strategy - In Sample
+Cumulative Return: 0.141893
+Std Return: 0.004964
+Mean Return: 0.000275
+
+
+Benchmark - In Sample
+Cumulative Return: 0.012325
+Std Return: 0.017041
+Mean Return: 0.000169
+
+
+++++++++++++++++++++
+
+
+Manual - Out Sample
+Cumulative Return: -0.140379
+Std Return: 0.007400
+Mean Return: -0.000273
+
+
+Strategy - Out Sample
+Cumulative Return: -0.108183
+Std Return: 0.002247
+Mean Return: -0.000225
+
+
+Benchmark - Out Sample
+Cumulative Return: -0.083579
+Std Return: 0.008500
+Mean Return: -0.000137
+
+
+--------------------
+
+

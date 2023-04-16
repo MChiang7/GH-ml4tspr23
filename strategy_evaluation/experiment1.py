@@ -10,19 +10,19 @@ def author():
     return 'mchiang30'
 
 def output(symbol='JPM',
-                sd_in=dt.datetime(2008,1,1),
-                ed_in=dt.datetime(2009,12,31),
-                sd_out=dt.datetime(2010, 1, 1),
-                ed_out=dt.datetime(2011, 12, 31),
-                sv=100000,
-                commission=9.95,
-                impact=0.005,
-                gen_plots=True,
-                stats=False):
+           sd_in=dt.datetime(2008, 1, 1),
+           ed_in=dt.datetime(2009, 12, 31),
+           sd_out=dt.datetime(2010, 1, 1),
+           ed_out=dt.datetime(2011, 12, 31),
+           sv=100000,
+           commission=9.95,
+           impact=0.005,
+           gen_plots=True,
+           stats=False):
 
-    manual_val = mkt_sim.compute_portvals(ManualStrategy.ManualStrategy().testPolicy(symbol, sd=sd_in, ed=ed_in), start_val=sv, commission=commission, impact=impact)
+    manual_val = mkt_sim.compute_portvals(ManualStrategy.ManualStrategy().testPolicy(symbol, sd=sd_in, ed=ed_in, sv=sv), start_val=sv, commission=commission, impact=impact)
 
-    learner = StrategyLearner.StrategyLearner(verbose=False, impact=impact)
+    learner = StrategyLearner.StrategyLearner(verbose=False, impact=impact, commission=commission)
     learner.add_evidence(symbol=symbol, sd=sd_in, ed=ed_in, sv=sv)
     strategy_val = mkt_sim.compute_portvals(learner.testPolicy(symbol=symbol, sd=sd_in, ed=ed_in, sv=sv), start_val=sv, commission=commission, impact=impact)
 
@@ -33,13 +33,16 @@ def output(symbol='JPM',
         gen_stats(manual_val, 'Manual', 'In Sample')
         gen_stats(strategy_val, 'Strategy', 'In Sample')
         gen_stats(benchmark_val, 'Benchmark', 'In Sample')
+        with open('./report_stats/output.txt', 'a') as f:
+            print('++++++++++++++++++++', file=f)
+            print('\n', file=f)
 
     if gen_plots:
         gen_plot(manual_val, strategy_val, benchmark_val, 'In Sample', symbol)
 
-    manual_val = mkt_sim.compute_portvals(ManualStrategy.ManualStrategy().testPolicy(symbol, sd=sd_out, ed=ed_out), start_val=sv, commission=commission, impact=impact)
+    manual_val = mkt_sim.compute_portvals(ManualStrategy.ManualStrategy().testPolicy(symbol, sd=sd_out, ed=ed_out, sv=sv), start_val=sv, commission=commission, impact=impact)
 
-    learner = StrategyLearner.StrategyLearner(verbose=False, impact=impact)
+    learner = StrategyLearner.StrategyLearner(verbose=False, impact=impact, commission=commission)
     learner.add_evidence(symbol=symbol, sd=sd_in, ed=ed_in, sv=sv)
     strategy_val = mkt_sim.compute_portvals(learner.testPolicy(symbol=symbol, sd=sd_out, ed=ed_out, sv=sv), start_val=sv, commission=commission, impact=impact)
 
@@ -50,6 +53,9 @@ def output(symbol='JPM',
         gen_stats(manual_val, 'Manual', 'Out Sample')
         gen_stats(strategy_val, 'Strategy', 'Out Sample')
         gen_stats(benchmark_val, 'Benchmark', 'Out Sample')
+        with open('./report_stats/output.txt', 'a') as f:
+            print('--------------------', file=f)
+            print('\n', file=f)
 
     if gen_plots:
         manual_val['value'] = manual_val['value'] / manual_val['value'][0]

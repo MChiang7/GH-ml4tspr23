@@ -112,9 +112,9 @@ def gen_plot_trades(sl_val, b_val, short, long, impact, symbol):
     plt.plot(sl_val, label='Learner - Impact {}'.format(impact), color='red')
     plt.plot(b_val, label='Benchmark - Impact {}'.format(impact), color='purple')
     for i in long:
-        plt.axvline(i, color="blue")
+        plt.axvline(i, color='black')
     for i in short:
-        plt.axvline(i, color="black")
+        plt.axvline(i, color='blue')
     plt.legend()
     plt.savefig('./images/experiment2_trades{}.png'.format(impact))
     plt.clf()

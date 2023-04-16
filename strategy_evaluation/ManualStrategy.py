@@ -113,9 +113,9 @@ def gen_plot(manual_val, benchmark_val, short_entries, long_entries, sample, sym
     plt.plot(manual_val, label='Manual Strategy', color='red')
     plt.plot(benchmark_val, label='Benchmark', color='purple')
     for i in long_entries:
-        plt.axvline(i, color="blue")
+        plt.axvline(i, color='black')
     for i in short_entries:
-        plt.axvline(i, color="black")
+        plt.axvline(i, color='blue')
     plt.legend()
     plt.savefig("./images/manual_{}.png".format(sample))
     plt.clf()

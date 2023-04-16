@@ -45,7 +45,7 @@ class ManualStrategy(object):
 
             if bb.loc[trades.index[i]].loc[symbol] < 0.0:
                 bb_action = 1
-            elif momentum.loc[trades.index[i]].loc[symbol] > 1:
+            elif bb.loc[trades.index[i]].loc[symbol] > 1:
                 bb_action = -1
             else:
                 bb_action = 0

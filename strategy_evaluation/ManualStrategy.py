@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import marketsimcode as mkt_sim
 import datetime as dt
 from util import get_data
-from strategy_evaluation import indicators
+import indicators
 
 
 class ManualStrategy(object):

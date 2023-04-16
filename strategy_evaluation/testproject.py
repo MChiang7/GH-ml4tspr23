@@ -10,6 +10,8 @@ def author():
 def report():
     random.seed(42)
 
+    stat = False
+
     ManualStrategy.report(symbol='JPM',
                 sd_in=dt.datetime(2008, 1, 1),
                 ed_in=dt.datetime(2009, 12, 31),
@@ -28,7 +30,7 @@ def report():
                 commission=9.95,
                 impact=0.005,
                 gen_plots=True,
-                stats=True)
+                stats=stat)
 
     experiment2.output(symbol='JPM',
                 sd_in=dt.datetime(2008, 1, 1),
@@ -39,7 +41,7 @@ def report():
                 commission=0.0,
                 impact=0.0,
                 gen_plots=True,
-                stats=True)
+                stats=stat)
 
 if __name__ == '__main__':
     report()

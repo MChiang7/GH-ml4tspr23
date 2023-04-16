@@ -33,7 +33,7 @@ def output(symbol='JPM',
         gen_stats(manual_val, 'Manual', 'In Sample')
         gen_stats(strategy_val, 'Strategy', 'In Sample')
         gen_stats(benchmark_val, 'Benchmark', 'In Sample')
-        with open('./report_stats/output.txt', 'a') as f:
+        with open('report_stats/output_exp1.txt', 'a') as f:
             print('++++++++++++++++++++', file=f)
             print('\n', file=f)
 
@@ -53,7 +53,7 @@ def output(symbol='JPM',
         gen_stats(manual_val, 'Manual', 'Out Sample')
         gen_stats(strategy_val, 'Strategy', 'Out Sample')
         gen_stats(benchmark_val, 'Benchmark', 'Out Sample')
-        with open('./report_stats/output.txt', 'a') as f:
+        with open('report_stats/output_exp1.txt', 'a') as f:
             print('--------------------', file=f)
             print('\n', file=f)
 
@@ -76,7 +76,7 @@ def gen_stats(val, strat, sample):
     std_daily_ret = ((val['value'] / val['value'].shift(1) - 1).iloc[1:]).std()
     mean_daily_ret = ((val['value'] / val['value'].shift(1) - 1).iloc[1:]).mean()
 
-    with open('./report_stats/output.txt', 'a') as f:
+    with open('report_stats/output_exp1.txt', 'a') as f:
         print('{} - {}'.format(strat, sample), file=f)
         print('Cumulative Return: {:.6f}'.format(cum_ret), file=f)
         print('Std Return: {:.6f}'.format(std_daily_ret), file=f)

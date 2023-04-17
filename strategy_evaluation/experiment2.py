@@ -58,6 +58,11 @@ def output(symbol='JPM',
         gen_plot_trades(sl2_val, b2_val, short_entries2, long_entries2, impact2, symbol)
         gen_plot_trades(sl3_val, b3_val, short_entries3, long_entries3, impact3, symbol)
         gen_plot_trades(sl4_val, b4_val, short_entries4, long_entries4, impact4, symbol)
+        total1 = len(short_entries1) + len(long_entries1)
+        total2 = len(short_entries2) + len(long_entries2)
+        total3 = len(short_entries3) + len(long_entries3)
+        total4 = len(short_entries4) + len(long_entries4)
+        gen_plot_num_trades([impact1, impact2, impact3, impact4], [total1, total2, total3, total4], symbol)
 
     if stats:
         gen_stats(sl1_val, b1_val, short_entries1, long_entries1, impact1)
@@ -117,6 +122,19 @@ def gen_plot_trades(sl_val, b_val, short, long, impact, symbol):
         plt.axvline(i, color='blue')
     plt.legend()
     plt.savefig('./images/experiment2_trades{}.png'.format(impact))
+    plt.clf()
+
+def gen_plot_num_trades(impacts, num_trades, symbol):
+    pd.plotting.register_matplotlib_converters()
+
+    plt.figure(figsize=(14, 8))
+    plt.title('Number of Trades vs Impact ({})'.format(symbol))
+    plt.xlabel('Impact')
+    plt.ylabel('Number of Trades')
+    plt.grid()
+    plt.plot(impacts, num_trades)
+    #plt.legend()
+    plt.savefig('./images/experiment2_num_trades.png')
     plt.clf()
 
 def gen_stats(val, bench, short, long, impact):

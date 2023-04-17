@@ -132,8 +132,8 @@ def gen_plot_num_trades(impacts, num_trades, symbol):
     plt.xlabel('Impact')
     plt.ylabel('Number of Trades')
     plt.grid()
-    plt.plot(impacts, num_trades)
-    #plt.legend()
+    plt.plot(impacts, num_trades, label='Trades Made')
+    plt.legend()
     plt.savefig('./images/experiment2_num_trades.png')
     plt.clf()
 
